@@ -1,12 +1,10 @@
-﻿<Window x:Class="GiveawayEntree.MainWindow"
+﻿<Window x:Class="GiveawayEntree.Window.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GiveawayEntree"
+        xmlns:view="clr-namespace:GiveawayEntree.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Giveaway Entree" Height="350" Width="525">
+    <view:MainWindowView />
 </Window>
