@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GiveawayEntree.Request.Twitter
 {
-    public abstract class TwitterRequest
+    public abstract class TwitterRequest : IRequest
     {
         protected List<KeyValuePair<string, string>> Parameters = new List<KeyValuePair<string, string>>();
         protected string ExtensionUrl;

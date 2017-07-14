@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GiveawayEntree.Model;
+using GiveawayEntree.Request.Twitter;
 
 namespace GiveawayEntree.Request
 {
@@ -16,7 +17,7 @@ namespace GiveawayEntree.Request
 
         public IEnumerable<Tweet> GetPosts()
         {
-            throw new System.NotImplementedException();
+            var getPostRequest = new GetPosts();
         }
 
         public bool LikePost(string postId)
