@@ -1,9 +1,12 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Http;
 using GiveawayEntree.Model.Twitter;
 
 namespace GiveawayEntree.Request.Twitter
 {
-    public class GetPosts : TwitterRequest<TwitterTweet[]>
+    public class GetPosts : TwitterRequest<IEnumerable<Tweet>>
     {
         public GetPosts()
         {

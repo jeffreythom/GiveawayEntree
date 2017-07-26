@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace GiveawayEntree.Request.Twitter
 {
-    public abstract class TwitterRequest : IRequest
+    public abstract class TwitterRequest<T> : BaseRequest<T>
     {
         protected List<KeyValuePair<string, string>> Parameters = new List<KeyValuePair<string, string>>();
         protected string ExtensionUrl;
 
-        protected virtual HttpMethod GetHttpMethod()
+        protected override WebHeaderCollection GetHeaders()
         {
-            return HttpMethod.Post;
-    }
-        protected string GetAuthorisationHeader()
+            var collection = new WebHeaderCollection
+            {
+                {
+                    "Authorization", GetAuthorisationHeader()
+                }
+            };
+            return collection;
+        }
+
+        private string GetAuthorisationHeader()
         {
             var oauthTimestamp = DateTime.Now.Subtract(DateTime.MinValue.AddYears(1969)).TotalMilliseconds;
             var oauthNonce = Guid.NewGuid().ToString().Replace("-", "");

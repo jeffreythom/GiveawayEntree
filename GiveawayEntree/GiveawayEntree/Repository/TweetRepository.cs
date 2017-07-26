@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using GiveawayEntree.Model;
+using GiveawayEntree.Model.Twitter;
 
 namespace GiveawayEntree.Repository
 {
@@ -13,6 +11,20 @@ namespace GiveawayEntree.Repository
         {
             Context.Tweets.Load();
             return Context.Tweets.First(tw => tw.Id == id);
-        } 
+        }
+
+        public Tweet GetSingleTweetFromTwitterTweetId(string twitterId)
+        {
+            Context.Tweets.Load();
+            return Context.Tweets.First(tw => tw.OriginId == twitterId);
+        }
+
+        public Tweet CreateTweet(Tweet tweet)
+        {
+            Context.Tweets.Load();
+            Context.Tweets.Add(tweet);
+            Context.SaveChanges();
+            return GetSingle(tweet.Id);
+        }
     }
 }

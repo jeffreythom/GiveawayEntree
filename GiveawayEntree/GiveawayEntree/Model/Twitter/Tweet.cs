@@ -1,4 +1,4 @@
-﻿namespace GiveawayEntree.Model
+﻿namespace GiveawayEntree.Model.Twitter
 {
     public class Tweet : Post
     {

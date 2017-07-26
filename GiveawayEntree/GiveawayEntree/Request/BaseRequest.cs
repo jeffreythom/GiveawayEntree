@@ -7,42 +7,64 @@ namespace GiveawayEntree.Request
 {
     public abstract class BaseRequest<T>
     {
-        protected BaseRequest(Action) 
+        protected HttpWebResponse RequestResponse;
+        protected T ReturnValue;
+        protected string ErrorMessage;
+
+        protected BaseRequest()
         {
-            
-        } 
+        }
+
         protected virtual HttpMethod GetHttpMethod()
         {
             return HttpMethod.Post;
         }
 
-        public async void MakeRequest()
+        public T GetResult()
+        {
+            return ReturnValue;
+        }
+
+        public string GetErrorMessage()
+        {
+            return ErrorMessage;
+        }
+
+        public async Task<bool> MakeRequest()
         {
             var request = WebRequest.Create(GetUrl());
             request.Method = GetHttpMethod().Method;
-            var response = (HttpWebResponse) await Task.Factory
+            request.Headers = GetHeaders();
+            RequestResponse = (HttpWebResponse) await Task.Factory
                 .FromAsync(request.BeginGetResponse,
                     request.EndGetResponse, null);
-            
+            if (RequestResponse.StatusCode != HttpStatusCode.OK)
+            {
+                OnError();
+                return false;
+            }
+            OnSuccess();
+            return true;
         }
 
-        public virtual void OnError()
+        protected virtual void OnError()
         {
-            
+           // ReturnAction(false, );
         }
 
-        public virtual void OnSuccess()
+        protected virtual void OnSuccess()
         {
-            
+           // ReturnAction(true, RequestResponse);
         }
 
-        protected virtual void GetHeaders()
+        protected virtual WebHeaderCollection GetHeaders()
         {
-            
+            return null;
         }
 
         protected virtual string GetUrl()
         {
             return "";
         }
+    }
 }

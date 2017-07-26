@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using GiveawayEntree.Model;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using GiveawayEntree.Model.Twitter;
 using GiveawayEntree.Request.Twitter;
 
 namespace GiveawayEntree.Request
@@ -15,9 +19,17 @@ namespace GiveawayEntree.Request
         public static readonly string ConsumerSecret = "TIKNQU10FViEmwRRyAkZBriYazIRs4MspQRWJZ3ro6KEyrmbRI";
         public static readonly string TokenSecret = "hUPLc1VJQOnyXvC32mqVB3FqdjUuCwlBdy6NaasYx5GDp";
 
-        public IEnumerable<Tweet> GetPosts()
+        public async Task<IEnumerable<Tweet>> GetPosts()
         {
             var getPostRequest = new GetPosts();
+            var result = await getPostRequest.MakeRequest();
+            if (result)
+            {
+                return getPostRequest.GetResult();
+            }
+            //deal with issue
+            Debugger.Log(1, "Debug", getPostRequest.GetErrorMessage());
+            return null;
         }
 
         public bool LikePost(string postId)
